@@ -1,0 +1,18 @@
+﻿@inherits Babylon.UI.Shared.Helpers.CustomDrawCanvasImp
+
+@page "/babylonui"
+<h3>Babylon</h3>
+<h3>Custom Drawing</h3>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-3 btn-group-vertical">
+            <div class="btn btn-secondary" @onclick="CreateBox">Create object</div>
+            <button type="button" class="btn btn-secondary">2</button>
+        </div>
+        <div class="col-9 my-component1" style="height: 600px;">
+            <canvas id=@CanvasId/>
+        </div>
+    </div>
+</div>
