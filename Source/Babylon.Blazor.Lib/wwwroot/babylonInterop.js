@@ -431,24 +431,19 @@ export function getMeshByName(scene,name) {
     return scene.getMeshByName(name);
 }
 
-export function enableMovingObjects() {
-    var pointerDragBehavior = new BABYLON.PointerDragBehavior({ dragAxis: new BABYLON.Vector3(0, 1, 0) });
+export function createUtilityLayerRenderer(scene) {
+    return new BABYLON.UtilityLayerRenderer(scene);
+}
 
-    //pointerDragBehavior.useObjectOrientationForDragging = false;
-    pointerDragBehavior.updateDragPlane = false;
+export function createPositionGizmo(utilLayer, attachedMesh) {
+    var gizmo = new BABYLON.PositionGizmo(utilLayer);
 
+    gizmo.updateGizmoRotationToMatchAttachedMesh = false;
+    gizmo.updateGizmoPositionToMatchAttachedMesh = true;
 
-    pointerDragBehavior.onDragStartObservable.add((event) => {
-        console.log("dragStart");
-        console.log(event);
-    });
-    pointerDragBehavior.onDragObservable.add((event) => {
-        console.log("drag");
-        console.log(event);
-    });
-    pointerDragBehavior.onDragEndObservable.add((event) => {
-        console.log("dragEnd");
-        console.log(event);
-    });
+    if (attachedMesh) {
+        gizmo.attachedMesh = attachedMesh;
+    }
 
+    return gizmo;
 }
