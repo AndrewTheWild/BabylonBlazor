@@ -38,7 +38,10 @@ More info on [github](https://github.com/AlexNek/BabylonBlazor)
 
   <ItemGroup>
     <Folder Include="Babylon\Actions\" />
-    <Folder Include="Babylon\Events\MeshEvents\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Babylon.Model\Babylon.Model.csproj" />
   </ItemGroup>
 
 </Project>

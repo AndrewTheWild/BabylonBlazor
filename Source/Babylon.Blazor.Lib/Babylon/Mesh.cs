@@ -1,4 +1,5 @@
-﻿using Babylon.Blazor.Babylon.Actions;
+﻿using System.Threading.Tasks;
+using Babylon.Blazor.Babylon.Actions;
 using Microsoft.JSInterop;
 
 namespace Babylon.Blazor.Babylon
@@ -12,8 +13,8 @@ namespace Babylon.Blazor.Babylon
     /// <seealso cref="IJsLibInstanceGetter" />
     public class Mesh : BabylonObject, IJsLibInstanceGetter
     {
-        private Scene _scene;
-        public ActionManager Action;
+        private readonly Scene _scene;
+        private readonly ActionManager _actionManagerAction;
 
         /// <summary>
         /// Gets the babylon instance.
@@ -31,6 +32,7 @@ namespace Babylon.Blazor.Babylon
             : base(jsObjRef)
         {
             _scene = scene;
+            _actionManagerAction = new ActionManager(_scene);
             BabylonInstance = babylonInstance; 
         }
         
@@ -41,6 +43,11 @@ namespace Babylon.Blazor.Babylon
         public void SetMaterial(Material mat)
         {
             BabylonInstance.InvokeAsync<object>("setMaterial", JsObjRef, mat.JsObjRef);
+        }
+
+        public async Task RegisterAction()
+        {
+            await _actionManagerAction.AddEventHandler(this);
         }
     }
 }

@@ -52,8 +52,7 @@ namespace Babylon.UI.Shared.Helpers
             //await AddCylinder(scene, "cyl2", 90);
 
            var box1= await AddBox1(Scene);
-           box1.Action = new ActionManager(Scene);
-           await box1.Action.AddEventHandler(box1);
+           await box1.RegisterAction();
 
            await AddThorus(Scene);
 
