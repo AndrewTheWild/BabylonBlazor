@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Babylon.Blazor.Babylon.Actions;
+using Babylon.Model.MeshEvents;
 using Microsoft.JSInterop;
 
 namespace Babylon.Blazor.Babylon
@@ -45,9 +46,9 @@ namespace Babylon.Blazor.Babylon
             BabylonInstance.InvokeAsync<object>("setMaterial", JsObjRef, mat.JsObjRef);
         }
 
-        public async Task RegisterAction()
+        public async Task RegisterAction(ActionManager.ActionType actionType,MeshEventBase meshEvent)
         {
-            await _actionManagerAction.AddEventHandler(this);
+            await _actionManagerAction.AddEventHandler(this, actionType, meshEvent);
         }
     }
 }

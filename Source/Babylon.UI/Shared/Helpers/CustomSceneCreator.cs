@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Babylon.Blazor;
 using Babylon.Blazor.Babylon;
 using Babylon.Blazor.Babylon.Actions;
+using Babylon.Blazor.Babylon.Events.MeshEvents;
 using Babylon.Blazor.Babylon.Parameters;
 using Babylon.Shared.Extensions.Babylon.MeshExetension;
 using Babylon.Shared.Extensions.Babylon.SceneExtensions;
@@ -52,7 +53,9 @@ namespace Babylon.UI.Shared.Helpers
             //await AddCylinder(scene, "cyl2", 90);
 
            var box1= await AddBox1(Scene);
-           await box1.RegisterAction();
+
+           //TODO: Rename class like EventHandler
+           await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger,new MeshMouseEvent(()=>Console.WriteLine("Test new functionality")));
 
            await AddThorus(Scene);
 

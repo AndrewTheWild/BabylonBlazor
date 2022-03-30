@@ -13,7 +13,7 @@ namespace Babylon.Blazor.Babylon.Actions
             OnPickTrigger
         }
 
-        private DotNetObjectReference<IMeshActionHandler> _objRef;
+        private DotNetObjectReference<MeshEventBase> _objRef;
         public Scene Scene { get; } 
 
         public ActionManager(Scene scene)
@@ -33,7 +33,7 @@ namespace Babylon.Blazor.Babylon.Actions
             }
         }
 
-        public async Task AddEventHandler(Mesh mesh,ActionType actionType, IMeshActionHandler meshActionHandler)
+        public async Task AddEventHandler(Mesh mesh,ActionType actionType, MeshEventBase meshActionHandler)
         {  
             _objRef = DotNetObjectReference.Create(meshActionHandler);
             await mesh.BabylonInstance.InvokeAsync<string>("registerOnClickForMesh", Scene.JsObjRef, mesh.JsObjRef, _objRef);
