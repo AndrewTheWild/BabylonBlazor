@@ -12,7 +12,7 @@
 
 export function createTestScene(canvasId) {
     var babylonCanvas = document.getElementById(canvasId);
-    /// <var>The engine</var>
+    
     var engine = new BABYLON.Engine(babylonCanvas, true);
 
     engine.runRenderLoop(function () {
@@ -87,14 +87,11 @@ export function createEngine(canvasId, antialias) {
     return engine;
 }
 
-export function createScene(engine) {
-    //alert(engine);
-   
+export function createScene(engine) { 
     return new BABYLON.Scene(engine);
 }
 
-export function createVector3(x, y, z) {
-    console.log("Vector");
+export function createVector3(x, y, z) { 
     return new BABYLON.Vector3(x, y, z);
 }
 
@@ -102,8 +99,7 @@ export function createColor3(x, y, z) {
     return new BABYLON.Color3(x, y, z);
 }
 
-export function createColor4(r, g, b, a) {
-    //alert(r + ", " + g + ", " + b + ", " + a);
+export function createColor4(r, g, b, a) { 
     return new BABYLON.Color4(r, g, b, a);
 }
 
@@ -420,13 +416,7 @@ function TraceProps(name, obj, recursive) {
 }
 
 
-//---------------------------
-export function setScalingObj(obj) {
-    obj.scaling.x += 2;
-   // box.scaling.y = 1.5;
-    //box.scaling.z = 3;
-}
-
+//--------------------------- 
 export function getMeshByName(scene,name) {
     return scene.getMeshByName(name);
 }
@@ -437,8 +427,7 @@ export function createUtilityLayerRenderer(scene) {
 
 export function createPositionGizmo(utilLayer, attachedMesh) {
     var gizmo = new BABYLON.PositionGizmo(utilLayer);
-
-    gizmo.updateGizmoRotationToMatchAttachedMesh = false;
+    
     gizmo.updateGizmoPositionToMatchAttachedMesh = true;
 
     if (attachedMesh) {
@@ -446,4 +435,12 @@ export function createPositionGizmo(utilLayer, attachedMesh) {
     }
 
     return gizmo;
+}
+
+export function registerOnClickForMesh(scene, mesh, dotNetHelper) {
+    mesh.actionManager = new BABYLON.ActionManager(scene);
+    mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger,()=>{
+        console.log(dotNetHelper);
+        return dotNetHelper.invokeMethodAsync('OnPickTrigger');
+    }));
 }

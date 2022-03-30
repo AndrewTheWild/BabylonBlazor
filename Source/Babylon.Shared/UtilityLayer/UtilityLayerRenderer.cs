@@ -14,9 +14,9 @@ namespace Babylon.Shared.UtilityLayer
             _babylonInstance = babylonInstance;
         }
 
-        public async Task<PositionGizmo> CreatePositionGizmo(Mesh attachedMesh)
+        public async Task<PositionGizmo> CreatePositionGizmo(Mesh attachedMesh=null)
         {
-            var jsObj = await _babylonInstance.InvokeAsync<IJSObjectReference>("createPositionGizmo", JsObjRef, attachedMesh.JsObjRef);
+            var jsObj = await _babylonInstance.InvokeAsync<IJSObjectReference>("createPositionGizmo", JsObjRef, attachedMesh?.JsObjRef);
             return new PositionGizmo(jsObj);
         }
     }

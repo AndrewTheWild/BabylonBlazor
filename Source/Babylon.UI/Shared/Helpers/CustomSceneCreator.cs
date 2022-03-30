@@ -3,7 +3,9 @@ using System.Drawing;
 using System.Threading.Tasks;
 using Babylon.Blazor;
 using Babylon.Blazor.Babylon;
+using Babylon.Blazor.Babylon.Actions;
 using Babylon.Blazor.Babylon.Parameters;
+using Babylon.Shared.Extensions.Babylon.MeshExetension;
 using Babylon.Shared.Extensions.Babylon.SceneExtensions;
 
 namespace Babylon.UI.Shared.Helpers
@@ -50,11 +52,13 @@ namespace Babylon.UI.Shared.Helpers
             //await AddCylinder(scene, "cyl2", 90);
 
            var box1= await AddBox1(Scene);
+           box1.Action = new ActionManager(Scene);
+           await box1.Action.AddEventHandler(box1);
 
-            await AddThorus(Scene);
+           await AddThorus(Scene);
 
             var utilLayer = await Scene.CreateUntilityLayerRenderer();
-            var gizmo = await utilLayer.CreatePositionGizmo(box1);
+            var gizmo = await utilLayer.CreatePositionGizmo();
 
             await RunRender(canvas, camera, Engine, Scene);
         }
