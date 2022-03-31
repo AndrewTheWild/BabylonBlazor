@@ -7,7 +7,6 @@ namespace Babylon.UI.Pages
         private async Task CreateBox()
         {
             await SceneCreator.AddBox("Box2");
-
         }
     }
 }

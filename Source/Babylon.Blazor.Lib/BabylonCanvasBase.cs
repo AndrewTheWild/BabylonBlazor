@@ -80,21 +80,15 @@ namespace Babylon.Blazor
 
                 try
                 {
-                    Console.WriteLine($"-------##{nameof(OnAfterRenderAsync)} {nameof(firstRender)} : {firstRender} | {nameof(_reRender)} : {_reRender} ");
-
                     if (_babylonInstance != null)
-                    {
-                        Console.WriteLine($"-------Dispose call from {nameof(BabylonCanvasBase)}");
+                    { 
                         _babylonInstance.Dispose();
                         _babylonInstance = null;
                     }
 
-                    _babylonInstance = await instanceCreator.CreateBabylonAsync();
-                    //var scene = await BabylonInstance.CreateTestScene(canvasId);
+                    _babylonInstance = await instanceCreator.CreateBabylonAsync(); 
 
-                    await InitializeScene(BabylonInstance, CanvasId);
-
-                    Console.WriteLine("------Creating instance--------");
+                    await InitializeScene(BabylonInstance, CanvasId); 
                 }
                 catch (Exception ex)
                 {

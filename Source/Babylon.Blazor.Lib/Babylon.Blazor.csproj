@@ -36,4 +36,12 @@ More info on [github](https://github.com/AlexNek/BabylonBlazor)
     <PackageReference Include="Microsoft.AspNetCore.Html.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Babylon\Actions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Babylon.Model\Babylon.Model.csproj" />
+  </ItemGroup>
+
 </Project>

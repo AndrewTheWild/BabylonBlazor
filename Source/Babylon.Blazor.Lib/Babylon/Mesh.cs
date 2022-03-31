@@ -1,26 +1,40 @@
-﻿using Microsoft.JSInterop;
+﻿using System.Threading.Tasks;
+using Babylon.Blazor.Babylon.Actions;
+using Babylon.Blazor.Babylon.MeshEvent;
+using Microsoft.JSInterop;
 
 namespace Babylon.Blazor.Babylon
 {
     /// <summary>
     /// Class Mesh.
-    /// Implements the <see cref="Babylon.Blazor.Babylon.BabylonObject" />
-    /// Implements the <see cref="Babylon.Blazor.IJsLibInstanceGetter" />
+    /// Implements the <see cref="BabylonObject" />
+    /// Implements the <see cref="IJsLibInstanceGetter" />
     /// </summary>
-    /// <seealso cref="Babylon.Blazor.Babylon.BabylonObject" />
-    /// <seealso cref="Babylon.Blazor.IJsLibInstanceGetter" />
+    /// <seealso cref="BabylonObject" />
+    /// <seealso cref="IJsLibInstanceGetter" />
     public class Mesh : BabylonObject, IJsLibInstanceGetter
     {
-        
+        private readonly Scene _scene;
+        private readonly ActionManager _actionManagerAction;
+
+        /// <summary>
+        /// Gets the babylon instance.
+        /// </summary>
+        /// <value>The babylon instance.</value>
+        public IJSInProcessObjectReference BabylonInstance { get; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Mesh"/> class.
         /// </summary>
         /// <param name="jsObjRef">The js object reference.</param>
         /// <param name="babylonInstance">The babylon instance.</param>
-        public Mesh(IJSObjectReference jsObjRef, IJSInProcessObjectReference babylonInstance)
+        /// <param name="scene"></param>
+        public Mesh(IJSObjectReference jsObjRef, IJSInProcessObjectReference babylonInstance,Scene scene)
             : base(jsObjRef)
         {
-            BabylonInstance = babylonInstance;
+            _scene = scene;
+            _actionManagerAction = new ActionManager(_scene);
+            BabylonInstance = babylonInstance; 
         }
         
         /// <summary>
@@ -32,10 +46,9 @@ namespace Babylon.Blazor.Babylon
             BabylonInstance.InvokeAsync<object>("setMaterial", JsObjRef, mat.JsObjRef);
         }
 
-        /// <summary>
-        /// Gets the babylon instance.
-        /// </summary>
-        /// <value>The babylon instance.</value>
-        public IJSInProcessObjectReference BabylonInstance { get; }
+        public async Task RegisterAction(ActionManager.ActionType actionType,MeshEventHandlerBase meshEvent)
+        {
+            await _actionManagerAction.AddEventHandler(this, actionType, meshEvent);
+        }
     }
 }
