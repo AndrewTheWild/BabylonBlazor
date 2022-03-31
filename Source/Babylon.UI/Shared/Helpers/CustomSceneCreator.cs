@@ -45,14 +45,7 @@ namespace Babylon.UI.Shared.Helpers
             var light1 = await Scene.CreateHemispehericLight("light1", hemisphericLightDirection, 0.98);
 
             var utilLayer = await Scene.CreateUntilityLayerRenderer();
-            var gizmo = await utilLayer.CreatePositionGizmo();
-
-            //await AddSphere(scene,-4.5,0,0);
-            //await AddSphere(scene, -10, 0, 0);
-            //await AddSphere(scene, -20, 0, 0);
-
-            //await AddCylinder("cyl1", 0);
-            //await AddCylinder(scene, "cyl2", 90);
+            var gizmo = await utilLayer.CreatePositionGizmo(); 
 
             var box1 = await AddBox1(Scene);
             await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
@@ -91,8 +84,7 @@ namespace Babylon.UI.Shared.Helpers
             BoxOptions.FaceColorsObj boxColors = await BabylonInstance.CreateFaceColors(Color.Blue);
             Options boxOptions = new BoxOptions { Height = 2, Width = 5.5, Depth = 0.5, FaceColors = boxColors };
             MeshParameters boxParameters = new MeshParameters(BabylonInstance) { Options = boxOptions };
-            await boxParameters.SetPosition(10, 0, 0);
-            Console.WriteLine($"Box {nameof(AddBox)}");
+            await boxParameters.SetPosition(10, 0, 0); 
             await Scene.CreateBox(name, boxParameters);
         }
 
