@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Babylon.Model.MeshEvents;
 using Microsoft.JSInterop;
 
-namespace Babylon.Blazor.Babylon.Events.MeshEvents
+namespace Babylon.Shared.BabylonEventHandlers.MeshEventHandlers
 {
-    public class MeshMouseEvent: MeshEventBase
-    { 
-        public MeshMouseEvent(Action action) : base(action)
+    public class MeshMouseEventHandler : MeshEventHandlerBase
+    {
+        public MeshMouseEventHandler(Func<Task> action) : base(action)
         {
         }
 

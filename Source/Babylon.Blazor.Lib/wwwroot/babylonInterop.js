@@ -426,7 +426,7 @@ export function createUtilityLayerRenderer(scene) {
 }
 
 export function createPositionGizmo(utilLayer, attachedMesh) {
-    var gizmo = new BABYLON.PositionGizmo(utilLayer);
+    let gizmo = new BABYLON.PositionGizmo(utilLayer);
     
     gizmo.updateGizmoPositionToMatchAttachedMesh = true;
 
@@ -437,10 +437,27 @@ export function createPositionGizmo(utilLayer, attachedMesh) {
     return gizmo;
 }
 
-export function registerOnClickForMesh(scene, mesh, dotNetHelper) {
-    mesh.actionManager = new BABYLON.ActionManager(scene);
-    mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger,()=>{
-        console.log(dotNetHelper);
-        return dotNetHelper.invokeMethodAsync('OnActionTrigger');
-    }));
+export function attachMeshToGizmo(gizmo, mesh) {
+    try {
+        if (mesh) { 
+            gizmo.attachedMesh = mesh;
+        }
+    } catch (error) {
+        console.error(`attachMeshToGizmo : ${error}`);
+    }
+}
+
+export function registerOnPickTriggerForMesh(scene, mesh, dotNetHelper) {
+    try {
+        if (!mesh.actionManager) {
+            mesh.actionManager = new BABYLON.ActionManager(scene);
+        }
+
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
+            return dotNetHelper.invokeMethodAsync('OnActionTrigger');
+        }));
+    } catch (error) {
+        console.error(`registerOnPickTriggerForMesh : ${error}`);
+    }
+    
 }

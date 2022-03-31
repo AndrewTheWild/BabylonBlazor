@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
-using Babylon.Blazor.Babylon.Events.MeshEvents;
+using System.Threading.Tasks; 
 using Babylon.Model.MeshEvents;
 using Microsoft.JSInterop;
 
@@ -13,7 +12,7 @@ namespace Babylon.Blazor.Babylon.Actions
             OnPickTrigger
         }
 
-        private DotNetObjectReference<MeshEventBase> _objRef;
+        private DotNetObjectReference<MeshEventHandlerBase> _objRef;
         public Scene Scene { get; } 
 
         public ActionManager(Scene scene)
@@ -26,17 +25,21 @@ namespace Babylon.Blazor.Babylon.Actions
             switch (actionType)
             {
                 case ActionType.OnPickTrigger:
-                    return "registerOnClickForMesh";
+                    return "registerOnPickTriggerForMesh";
                 default:
-                    Console.WriteLine("Add handler for action");
+                    Console.WriteLine("Please add function for register");
                     return string.Empty;
             }
         }
 
-        public async Task AddEventHandler(Mesh mesh,ActionType actionType, MeshEventBase meshActionHandler)
+        public async Task AddEventHandler(Mesh mesh,ActionType actionType, MeshEventHandlerBase meshActionHandler)
         {  
             _objRef = DotNetObjectReference.Create(meshActionHandler);
-            await mesh.BabylonInstance.InvokeAsync<string>("registerOnClickForMesh", Scene.JsObjRef, mesh.JsObjRef, _objRef);
+            await mesh.BabylonInstance.InvokeAsync<string>(
+                GetFuncNameByActionType(actionType), 
+                Scene.JsObjRef, 
+                mesh.JsObjRef, 
+                _objRef);
         }
 
         public void Dispose()

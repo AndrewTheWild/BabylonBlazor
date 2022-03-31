@@ -7,7 +7,7 @@ namespace Babylon.Shared.UtilityLayer
 {
     public class UtilityLayerRenderer : BabylonObject
     {
-        private IJSInProcessObjectReference _babylonInstance;
+        private readonly IJSInProcessObjectReference _babylonInstance;
 
         public UtilityLayerRenderer(IJSObjectReference jsObjRef,IJSInProcessObjectReference babylonInstance) : base(jsObjRef)
         {
@@ -17,7 +17,7 @@ namespace Babylon.Shared.UtilityLayer
         public async Task<PositionGizmo> CreatePositionGizmo(Mesh attachedMesh=null)
         {
             var jsObj = await _babylonInstance.InvokeAsync<IJSObjectReference>("createPositionGizmo", JsObjRef, attachedMesh?.JsObjRef);
-            return new PositionGizmo(jsObj);
+            return new PositionGizmo(jsObj, _babylonInstance);
         }
     }
 }
