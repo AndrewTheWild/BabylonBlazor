@@ -37,10 +37,11 @@ More info on [github](https://github.com/AlexNek/BabylonBlazor)
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <Folder Include="Babylon\Actions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Babylon.Model\Babylon.Model.csproj" />
   </ItemGroup>
 
 </Project>

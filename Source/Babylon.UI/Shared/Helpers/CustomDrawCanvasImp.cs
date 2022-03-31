@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Babylon.Blazor; 
 
 namespace Babylon.UI.Shared.Helpers
@@ -13,8 +14,16 @@ namespace Babylon.UI.Shared.Helpers
         /// <param name="canvasId">The canvas identifier.</param>
         protected override async Task InitializeScene(BabylonInstance babylonInstance, string canvasId)
         {
-            SceneCreator = new CustomSceneCreator(babylonInstance, canvasId);
-            await SceneCreator.CreateAsync(this);
+            try
+            {
+                SceneCreator = new CustomSceneCreator(babylonInstance, canvasId);
+                await SceneCreator.CreateAsync(this);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

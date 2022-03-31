@@ -3,7 +3,10 @@ using System.Drawing;
 using System.Threading.Tasks;
 using Babylon.Blazor;
 using Babylon.Blazor.Babylon;
+using Babylon.Blazor.Babylon.Actions;
 using Babylon.Blazor.Babylon.Parameters;
+using Babylon.Shared.BabylonEventHandlers.MeshEventHandlers;
+using Babylon.Shared.Extensions.Babylon.SceneExtensions;
 
 namespace Babylon.UI.Shared.Helpers
 {
@@ -32,7 +35,6 @@ namespace Babylon.UI.Shared.Helpers
         {
             Engine = await BabylonInstance.CreateEngine(CanvasId, true);
             Scene = await Engine.CreateScene();
-            //Scene scene = await BabylonInstance.CreateScene(engine);
             //set rotation center
             var cameraTarget = await BabylonInstance.CreateVector3(0, 0, 0);
             //set camera
@@ -42,39 +44,39 @@ namespace Babylon.UI.Shared.Helpers
             var hemisphericLightDirection = await BabylonInstance.CreateVector3(1, 1, 0);
             var light1 = await Scene.CreateHemispehericLight("light1", hemisphericLightDirection, 0.98);
 
-            await Scene.EnableMovingObjects();
+            var utilLayer = await Scene.CreateUntilityLayerRenderer();
+            var gizmo = await utilLayer.CreatePositionGizmo(); 
 
-            //await AddSphere(scene,-4.5,0,0);
-            //await AddSphere(scene, -10, 0, 0);
-            //await AddSphere(scene, -20, 0, 0);
+            var box1 = await AddBox1(Scene);
+            await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
+                new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(box1)));
 
-            //await AddCylinder("cyl1", 0);
-            //await AddCylinder(scene, "cyl2", 90);
-
-            await AddBox1(Scene);
-
-            await AddThorus(Scene);
+            var torus = await AddThorus(Scene);
+            await torus.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
+                new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(torus)));
 
             await RunRender(canvas, camera, Engine, Scene);
         }
 
-        private async Task AddThorus(Scene scene)
+        private async Task<Mesh> AddThorus(Scene scene)
         {
             TorusOptions options = new TorusOptions() { Diameter = 4, Tessellation = 20 };
             MeshParameters torusParameters = new MeshParameters(BabylonInstance) { Options = options };
-            Mesh torus = await scene.CreateTorus("Torus1", torusParameters);
+            var torus = await scene.CreateTorus("Torus1", torusParameters);
             var diffuseColor = await BabylonInstance.CreateColor3(Color.CadetBlue);
             var material = await scene.CreateMaterial("material2", diffuseColor, null, 1.0);
             torus.SetMaterial(material);
+
+            return torus;
         }
 
-        private async Task AddBox1(Scene scene)
+        private async Task<Mesh> AddBox1(Scene scene)
         {
             BoxOptions.FaceColorsObj boxColors = await BabylonInstance.CreateFaceColors(Color.Chocolate);
             Options boxOptions = new BoxOptions { Size = 2, FaceColors = boxColors };
             MeshParameters boxParameters = new MeshParameters(BabylonInstance) { Options = boxOptions };
             await boxParameters.SetPosition(0, 0, 0);
-            var obj = await scene.CreateBox("Box1", boxParameters);
+            return await scene.CreateBox("Box1", boxParameters);
         }
 
         public async Task AddBox(string name)
@@ -82,8 +84,7 @@ namespace Babylon.UI.Shared.Helpers
             BoxOptions.FaceColorsObj boxColors = await BabylonInstance.CreateFaceColors(Color.Blue);
             Options boxOptions = new BoxOptions { Height = 2, Width = 5.5, Depth = 0.5, FaceColors = boxColors };
             MeshParameters boxParameters = new MeshParameters(BabylonInstance) { Options = boxOptions };
-            await boxParameters.SetPosition(10, 0, 0);
-            Console.WriteLine($"Box {nameof(AddBox)}");
+            await boxParameters.SetPosition(10, 0, 0); 
             await Scene.CreateBox(name, boxParameters);
         }
 

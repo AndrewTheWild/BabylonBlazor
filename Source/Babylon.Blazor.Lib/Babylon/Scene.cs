@@ -72,7 +72,7 @@ namespace Babylon.Blazor.Babylon
                              parameters.Position?.JsObjRef,
                              boxOptions?.FaceColors?.JsObjRef,
                              JsObjRef);
-            return new Mesh(jsMesh, BabylonInstance);
+            return new Mesh(jsMesh, BabylonInstance,this);
         }
         public async Task<Mesh> CreateTorus(string name, MeshParameters parameters)
         {
@@ -84,7 +84,7 @@ namespace Babylon.Blazor.Babylon
                              parameters.Rotation?.JsObjRef,
                              parameters.Position?.JsObjRef,
                              JsObjRef);
-            return new Mesh(jsMesh, BabylonInstance);
+            return new Mesh(jsMesh, BabylonInstance,this);
         }
         
         /// <summary>
@@ -103,7 +103,7 @@ namespace Babylon.Blazor.Babylon
                              parameters.Rotation.JsObjRef,
                              parameters.Position.JsObjRef,
                              JsObjRef);
-            return new Mesh(jsMesh, BabylonInstance);
+            return new Mesh(jsMesh, BabylonInstance, this);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Babylon.Blazor.Babylon
                                             positionJsObjRef,
                                             JsObjRef
                                         );
-            return new Mesh(jsMesh, BabylonInstance);
+            return new Mesh(jsMesh, BabylonInstance, this);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Babylon.Blazor.Babylon
                              "black",
                              rectanglePlaneSize
                          );
-            return new Mesh(jsMesh, BabylonInstance);
+            return new Mesh(jsMesh, BabylonInstance, this);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Babylon.Blazor.Babylon
                              toPoint.JsObjRef,
                              radius,
                              JsObjRef);
-            return new Mesh(jsMesh, BabylonInstance);
+            return new Mesh(jsMesh, BabylonInstance, this);
         }
 
         /// <summary>

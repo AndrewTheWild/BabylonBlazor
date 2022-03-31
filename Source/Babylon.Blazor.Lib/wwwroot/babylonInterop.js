@@ -12,7 +12,7 @@
 
 export function createTestScene(canvasId) {
     var babylonCanvas = document.getElementById(canvasId);
-    /// <var>The engine</var>
+    
     var engine = new BABYLON.Engine(babylonCanvas, true);
 
     engine.runRenderLoop(function () {
@@ -87,14 +87,11 @@ export function createEngine(canvasId, antialias) {
     return engine;
 }
 
-export function createScene(engine) {
-    //alert(engine);
-   
+export function createScene(engine) { 
     return new BABYLON.Scene(engine);
 }
 
-export function createVector3(x, y, z) {
-    console.log("Vector");
+export function createVector3(x, y, z) { 
     return new BABYLON.Vector3(x, y, z);
 }
 
@@ -102,8 +99,7 @@ export function createColor3(x, y, z) {
     return new BABYLON.Color3(x, y, z);
 }
 
-export function createColor4(r, g, b, a) {
-    //alert(r + ", " + g + ", " + b + ", " + a);
+export function createColor4(r, g, b, a) { 
     return new BABYLON.Color4(r, g, b, a);
 }
 
@@ -420,35 +416,48 @@ function TraceProps(name, obj, recursive) {
 }
 
 
-//---------------------------
-export function setScalingObj(obj) {
-    obj.scaling.x += 2;
-   // box.scaling.y = 1.5;
-    //box.scaling.z = 3;
-}
-
+//--------------------------- 
 export function getMeshByName(scene,name) {
     return scene.getMeshByName(name);
 }
 
-export function enableMovingObjects() {
-    var pointerDragBehavior = new BABYLON.PointerDragBehavior({ dragAxis: new BABYLON.Vector3(0, 1, 0) });
+export function createUtilityLayerRenderer(scene) {
+    return new BABYLON.UtilityLayerRenderer(scene);
+}
 
-    //pointerDragBehavior.useObjectOrientationForDragging = false;
-    pointerDragBehavior.updateDragPlane = false;
+export function createPositionGizmo(utilLayer, attachedMesh) {
+    let gizmo = new BABYLON.PositionGizmo(utilLayer);
+    
+    gizmo.updateGizmoPositionToMatchAttachedMesh = true;
 
+    if (attachedMesh) {
+        gizmo.attachedMesh = attachedMesh;
+    }
 
-    pointerDragBehavior.onDragStartObservable.add((event) => {
-        console.log("dragStart");
-        console.log(event);
-    });
-    pointerDragBehavior.onDragObservable.add((event) => {
-        console.log("drag");
-        console.log(event);
-    });
-    pointerDragBehavior.onDragEndObservable.add((event) => {
-        console.log("dragEnd");
-        console.log(event);
-    });
+    return gizmo;
+}
 
+export function attachMeshToGizmo(gizmo, mesh) {
+    try {
+        if (mesh) { 
+            gizmo.attachedMesh = mesh;
+        }
+    } catch (error) {
+        console.error(`attachMeshToGizmo : ${error}`);
+    }
+}
+
+export function registerOnPickTriggerForMesh(scene, mesh, dotNetHelper) {
+    try {
+        if (!mesh.actionManager) {
+            mesh.actionManager = new BABYLON.ActionManager(scene);
+        }
+
+        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
+             dotNetHelper.invokeMethodAsync('OnActionTrigger');
+        }));
+    } catch (error) {
+        console.error(`registerOnPickTriggerForMesh : ${error}`);
+    }
+    
 }

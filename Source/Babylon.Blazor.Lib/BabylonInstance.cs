@@ -65,8 +65,7 @@ namespace Babylon.Blazor
         public async Task<Engine> CreateEngine(string canvasId, bool antialias = false)
         {
             await _jSInstance.InvokeVoidAsync("console.log", $"***CreateEngine {_babylonWrapper}");
-            var jsEngine = await _babylonWrapper.InvokeAsync<IJSObjectReference>("createEngine", canvasId, antialias);
-            //var jsEngine = await _babylonWrapper.InvokeAsync<IJSObjectReference>("createEngine", "canvasId", true);
+            var jsEngine = await _babylonWrapper.InvokeAsync<IJSObjectReference>("createEngine", canvasId, antialias); 
             return new Engine(jsEngine, _babylonWrapper);
         }
 
@@ -122,8 +121,7 @@ namespace Babylon.Blazor
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
-        { 
-            Console.WriteLine("-------Disposing-----"); 
+        {  
             _babylonWrapper.Dispose();
         }
 
