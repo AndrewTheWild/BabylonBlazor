@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BabylonEventHandlers\MeshEventHandlers\" />
     <Folder Include="Extensions\Babylon\MeshExetension\" />
     <Folder Include="Gizmo\" />
     <Folder Include="UtilityLayer\" />

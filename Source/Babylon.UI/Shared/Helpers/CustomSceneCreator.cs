@@ -55,13 +55,12 @@ namespace Babylon.UI.Shared.Helpers
             //await AddCylinder(scene, "cyl2", 90);
 
             var box1 = await AddBox1(Scene);
-
-
-            await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger, new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(box1)));
+            await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
+                new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(box1)));
 
             var torus = await AddThorus(Scene);
-
-            await torus.RegisterAction(ActionManager.ActionType.OnPickTrigger, new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(torus)));
+            await torus.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
+                new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(torus)));
 
             await RunRender(canvas, camera, Engine, Scene);
         }

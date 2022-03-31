@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.JSInterop;
 
-namespace Babylon.Model.MeshEvents
+namespace Babylon.Blazor.Babylon.MeshEvent
 {
     public abstract class MeshEventHandlerBase
     {
@@ -9,5 +10,11 @@ namespace Babylon.Model.MeshEvents
 
         public MeshEventHandlerBase(Func<Task> action)
             => _action = action;
+
+        [JSInvokable]
+        public virtual async Task OnActionTrigger()
+        {
+            await _action.Invoke();
+        }
     }
 }

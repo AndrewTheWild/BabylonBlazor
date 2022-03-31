@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Babylon.Model.MeshEvents;
-using Microsoft.JSInterop;
+using Babylon.Blazor.Babylon.MeshEvent; 
 
 namespace Babylon.Shared.BabylonEventHandlers.MeshEventHandlers
 {
@@ -9,14 +8,6 @@ namespace Babylon.Shared.BabylonEventHandlers.MeshEventHandlers
     {
         public MeshMouseEventHandler(Func<Task> action) : base(action)
         {
-        }
-
-
-        // TODO: Create realization via interface or other way
-        [JSInvokable]
-        public void OnActionTrigger()
-        {
-            _action.Invoke();
-        }
+        } 
     }
 }

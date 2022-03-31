@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Babylon.Blazor.Babylon.Actions;
-using Babylon.Model.MeshEvents;
+using Babylon.Blazor.Babylon.MeshEvent;
 using Microsoft.JSInterop;
 
 namespace Babylon.Blazor.Babylon
