@@ -16,6 +16,7 @@
   <ItemGroup>
     <Folder Include="Extensions\Babylon\MeshExetension\" />
     <Folder Include="Gizmo\" />
+    <Folder Include="MeshCreator\" />
     <Folder Include="UtilityLayer\" />
   </ItemGroup>
 
