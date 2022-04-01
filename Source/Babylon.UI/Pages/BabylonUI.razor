@@ -6,12 +6,11 @@
 
 
 <div class="container">
-    <div class="row">
-        <div class="col-3 btn-group-vertical">
-            <div class="btn btn-secondary" @onclick="CreateBox">Create object</div>
-            <button type="button" class="btn btn-secondary">2</button>
+    <div class="d-flex flex-column">
+        <div class="">
+            <ToolbarBabylon SceneCreator="@SceneCreator"/>
         </div>
-        <div class="col-9 my-component1" style="height: 600px;">
+        <div class="" style="height: 600px;">
             <canvas id=@CanvasId/>
         </div>
     </div>

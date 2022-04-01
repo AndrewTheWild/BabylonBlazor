@@ -5,6 +5,7 @@ using Babylon.Blazor;
 using Babylon.Blazor.Babylon;
 using Babylon.Blazor.Babylon.Actions;
 using Babylon.Blazor.Babylon.Parameters;
+using Babylon.Model.Constants;
 using Babylon.Shared.BabylonEventHandlers.MeshEventHandlers;
 using Babylon.Shared.Extensions.Babylon.SceneExtensions;
 
@@ -14,7 +15,6 @@ namespace Babylon.UI.Shared.Helpers
     {
         public Engine Engine { get; private set; }
         public Scene Scene { get; private set; }
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneCreator"/> class.
@@ -56,6 +56,11 @@ namespace Babylon.UI.Shared.Helpers
                 new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(torus)));
 
             await RunRender(canvas, camera, Engine, Scene);
+        }
+
+        private async Task CreateMesh(TypeMesh.Mesh typeMesh)
+        {
+
         }
 
         private async Task<Mesh> AddThorus(Scene scene)
