@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
+using Babylon.Blazor.Models.ServiceContracts;
 
 namespace Babylon.Blazor.Babylon.Parameters
 {
@@ -17,7 +18,7 @@ namespace Babylon.Blazor.Babylon.Parameters
         /// Initializes a new instance of the <see cref="MeshParameters"/> class.
         /// </summary>
         /// <param name="babylonInstance">The babylon instance.</param>
-        public MeshParameters(BabylonInstance babylonInstance)
+        public MeshParameters(IBabylonInstance babylonInstance)
         {
             BabylonInstance = babylonInstance;
         }
@@ -76,6 +77,6 @@ namespace Babylon.Blazor.Babylon.Parameters
         }
 
         //[Inject]
-        private BabylonInstance BabylonInstance { get; }
+        private IBabylonInstance BabylonInstance { get; }
     }
 }
