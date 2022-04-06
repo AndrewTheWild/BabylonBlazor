@@ -4,9 +4,9 @@ using Babylon.Model.Constants;
 using Babylon.UI.Shared.Helpers;
 using Microsoft.AspNetCore.Components;
 
-namespace Babylon.UI.Shared.Components.Toolbar
+namespace Babylon.UI.Shared.Components.Toolbars
 {
-    public partial class ToolbarBabylon
+    public partial class ToolbarMeshesBabylon
     {
         [Parameter]
         public CustomSceneCreator SceneCreator { get; set; }

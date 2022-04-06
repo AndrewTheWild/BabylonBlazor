@@ -32,14 +32,16 @@ namespace Babylon.Blazor.Babylon.Actions
             }
         }
 
-        public async Task AddEventHandler(Mesh mesh,ActionType actionType, MeshEventHandlerBase meshActionHandler)
+        public async Task<ActionMesh> AddEventHandler(Mesh mesh,ActionType actionType, MeshEventHandlerBase meshActionHandler)
         {  
             _objRef = DotNetObjectReference.Create(meshActionHandler);
-            await mesh.BabylonInstance.InvokeAsync<string>(
+            var action=await mesh.BabylonInstance.InvokeAsync<IJSObjectReference>(
                 GetFuncNameByActionType(actionType), 
                 Scene.JsObjRef, 
                 mesh.JsObjRef, 
                 _objRef);
+
+            return new ActionMesh(action);
         }
 
         public void Dispose()
