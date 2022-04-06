@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 using Babylon.Blazor.Babylon.Parameters;
 
@@ -8,13 +11,19 @@ namespace Babylon.Blazor.Babylon
 {
     /// <summary>
     /// Class Scene.
-    /// Implements the <see cref="Babylon.Blazor.Babylon.BabylonObject" />
-    /// Implements the <see cref="Babylon.Blazor.IJsLibInstanceGetter" />
+    /// Implements the <see cref="BabylonObject" />
+    /// Implements the <see cref="IJsLibInstanceGetter" />
     /// </summary>
-    /// <seealso cref="Babylon.Blazor.Babylon.BabylonObject" />
-    /// <seealso cref="Babylon.Blazor.IJsLibInstanceGetter" />
+    /// <seealso cref="BabylonObject" />
+    /// <seealso cref="IJsLibInstanceGetter" />
     public class Scene : BabylonObject, IJsLibInstanceGetter
     {
+        /// <summary>
+        /// Gets the babylon instance.
+        /// </summary>
+        /// <value>The babylon instance.</value>
+        public IJSInProcessObjectReference BabylonInstance { get; }
+
         //public Scene(IJSRuntime jsRuntime, JsRuntimeObjectRef objRef) : base(jsRuntime, objRef) { }
         /// <summary>
         /// Initializes a new instance of the <see cref="Scene"/> class.
@@ -258,17 +267,6 @@ namespace Babylon.Blazor.Babylon
         public async Task ShowWorldAxis(double size)
         {
             await BabylonInstance.InvokeVoidAsync("showWorldAxis", size, JsObjRef);
-        }
-
-        public async Task EnableMovingObjects()
-        {
-            await BabylonInstance.InvokeVoidAsync("enableMovingObjects"); 
-        }
-
-        /// <summary>
-        /// Gets the babylon instance.
-        /// </summary>
-        /// <value>The babylon instance.</value>
-        public IJSInProcessObjectReference BabylonInstance { get; }
+        } 
     }
 }

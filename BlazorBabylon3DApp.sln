@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Babylon.Blazor", "Source\Ba
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Babylon.Shared", "Source\Babylon.Shared\Babylon.Shared.csproj", "{210E32DC-3B0B-4C80-89AF-5C3058A7F451}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Babylon.Model", "Source\Babylon.Model\Babylon.Model.csproj", "{228A4D3F-3E7D-49C8-BC65-14060F1F1110}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Babylon.Model", "Source\Babylon.Model\Babylon.Model.csproj", "{228A4D3F-3E7D-49C8-BC65-14060F1F1110}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Babylon.UI", "Source\Babylon.UI\Babylon.UI.csproj", "{0AC7316C-48B9-42A6-A3CF-448A45DCBBF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Babylon.UI", "Source\Babylon.UI\Babylon.UI.csproj", "{0AC7316C-48B9-42A6-A3CF-448A45DCBBF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

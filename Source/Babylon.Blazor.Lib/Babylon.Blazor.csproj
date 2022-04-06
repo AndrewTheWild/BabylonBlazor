@@ -38,6 +38,7 @@ More info on [github](https://github.com/AlexNek/BabylonBlazor)
 
   <ItemGroup>
     <Folder Include="Babylon\Actions\" />
+    <Folder Include="Models\ServiceContracts\" />
   </ItemGroup>
 
   <ItemGroup>
