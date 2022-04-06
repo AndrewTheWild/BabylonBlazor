@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
-using System.Threading.Tasks;
-using Babylon.Blazor;
+using System.Threading.Tasks; 
 using Babylon.Blazor.Babylon;
 using Babylon.Blazor.Babylon.Parameters; 
 using Babylon.Blazor.Models.ServiceContracts;
@@ -19,18 +18,14 @@ namespace Babylon.Shared.MeshCreator
             Scene = scene;
         }
         
-        public Task<Mesh> CreateMesh()
+        public async Task<Mesh> CreateMesh(string name)
         {
-            throw new System.NotImplementedException();
-        }
+            var boxColors = await _babylonInstance.CreateFaceColors(Color.Blue);
+            var boxOptions = new BoxOptions { Height = 2, Width = 5.5, Depth = 0.5, FaceColors = boxColors };
+            var boxParameters = new MeshParameters(_babylonInstance) { Options = boxOptions };
+            await boxParameters.SetPosition(10, 0, 0); 
 
-        public async Task AddBox(string name)
-        {
-            BoxOptions.FaceColorsObj boxColors = await _babylonInstance.CreateFaceColors(Color.Blue);
-            Options boxOptions = new BoxOptions { Height = 2, Width = 5.5, Depth = 0.5, FaceColors = boxColors };
-            MeshParameters boxParameters = new MeshParameters(_babylonInstance) { Options = boxOptions };
-            await boxParameters.SetPosition(10, 0, 0);
-            await Scene.CreateBox(name, boxParameters);
-        }
+            return await Scene.CreateBox(name, boxParameters);
+        } 
     }
 }

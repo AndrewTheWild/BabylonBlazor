@@ -9,10 +9,14 @@
             Cylinder,
             Sphere
         }
-        //public const string
-        //    Box = "Box",
-        //    Torus = "Torus",
-        //    Cylinder = "Cylinder",
-        //    Sphere = "Sphere";
+
+        public static string GetNameForMesh(Mesh type) => type switch
+        {
+            Mesh.Box => "Box",
+            Mesh.Torus => "Torus",
+            Mesh.Cylinder => "Cylinder",
+            Mesh.Sphere => "Sphere",
+            _ => string.Empty
+        };
     }
 }

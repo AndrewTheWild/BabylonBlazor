@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
+using Babylon.Model.Constants;
 using Babylon.UI.Shared.Helpers;
 using Microsoft.AspNetCore.Components;
 
@@ -11,11 +12,10 @@ namespace Babylon.UI.Shared.Components.Toolbar
         public CustomSceneCreator SceneCreator { get; set; }
 
         private async Task CreateBox()
-        {
+        {  
             try
             {
-                Console.WriteLine("Click");
-                await SceneCreator.AddBox("Box2");
+               await SceneCreator.CreateMesh(TypeMesh.Mesh.Box); 
             }
             catch (Exception ex)
             {

@@ -17,6 +17,12 @@ namespace Babylon.Blazor.Babylon
         private readonly Scene _scene;
         private readonly ActionManager _actionManagerAction;
 
+        public string Name
+        {
+            get => BabylonInstance.Invoke<string>("getMeshName", JsObjRef);
+            set => BabylonInstance.Invoke<string>("setMeshName", JsObjRef, value);
+        }
+
         /// <summary>
         /// Gets the babylon instance.
         /// </summary>
@@ -29,14 +35,14 @@ namespace Babylon.Blazor.Babylon
         /// <param name="jsObjRef">The js object reference.</param>
         /// <param name="babylonInstance">The babylon instance.</param>
         /// <param name="scene"></param>
-        public Mesh(IJSObjectReference jsObjRef, IJSInProcessObjectReference babylonInstance,Scene scene)
+        public Mesh(IJSObjectReference jsObjRef, IJSInProcessObjectReference babylonInstance, Scene scene)
             : base(jsObjRef)
         {
             _scene = scene;
             _actionManagerAction = new ActionManager(_scene);
-            BabylonInstance = babylonInstance; 
+            BabylonInstance = babylonInstance;
         }
-        
+
         /// <summary>
         /// Sets the material.
         /// </summary>
@@ -46,7 +52,7 @@ namespace Babylon.Blazor.Babylon
             BabylonInstance.InvokeAsync<object>("setMaterial", JsObjRef, mat.JsObjRef);
         }
 
-        public async Task RegisterAction(ActionManager.ActionType actionType,MeshEventHandlerBase meshEvent)
+        public async Task RegisterAction(ActionManager.ActionType actionType, MeshEventHandlerBase meshEvent)
         {
             await _actionManagerAction.AddEventHandler(this, actionType, meshEvent);
         }

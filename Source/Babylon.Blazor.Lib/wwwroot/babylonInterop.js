@@ -417,6 +417,7 @@ function TraceProps(name, obj, recursive) {
 
 
 //--------------------------- 
+
 export function getMeshByName(scene,name) {
     return scene.getMeshByName(name);
 }
@@ -459,5 +460,12 @@ export function registerOnPickTriggerForMesh(scene, mesh, dotNetHelper) {
     } catch (error) {
         console.error(`registerOnPickTriggerForMesh : ${error}`);
     }
-    
+}
+
+export function getMeshName(mesh) {
+    return mesh.name;
+}
+
+export function setMeshName(mesh, name) {
+    mesh.name = name;
 }

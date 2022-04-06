@@ -9,5 +9,6 @@ namespace Babylon.Blazor.Models.ServiceContracts
     {
         public Task<BoxOptions.FaceColorsObj> CreateFaceColors(Color color);
         public Task<Vector3> CreateVector3(double x, double y, double z);
+        public Task<Color3> CreateColor3(Color color);
     }
 }
