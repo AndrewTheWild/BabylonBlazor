@@ -17,9 +17,9 @@ namespace Babylon.UI.Shared.Helpers
             try
             {
                 SceneCreator = new CustomSceneCreator(babylonInstance, canvasId);
-                StateHasChanged();
-
                 await SceneCreator.CreateAsync(this);
+
+                StateHasChanged();
             }
             catch (Exception e)
             {

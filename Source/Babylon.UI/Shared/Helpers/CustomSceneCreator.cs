@@ -12,6 +12,7 @@ using Babylon.Model.Constants;
 using Babylon.Shared.Algorithms;
 using Babylon.Shared.BabylonEventHandlers.MeshEventHandlers;
 using Babylon.Shared.Extensions.Babylon.SceneExtensions;
+using Babylon.Shared.Gizmo;
 using Babylon.Shared.MeshCreator;
 
 namespace Babylon.UI.Shared.Helpers
@@ -19,9 +20,11 @@ namespace Babylon.UI.Shared.Helpers
     public class CustomSceneCreator : SceneCreator
     {
         public Engine Engine { get; private set; }
-        public Scene Scene { get; private set; } 
+        public Scene Scene { get; private set; }
 
-        public List<Mesh> Meshes { get; private set; }
+        public PositionGizmo Gizmo { get; private set; }
+
+        public List<Mesh> Meshes { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneCreator"/> class.
@@ -53,11 +56,11 @@ namespace Babylon.UI.Shared.Helpers
             var light1 = await Scene.CreateHemispehericLight("light1", hemisphericLightDirection, 0.98);
 
             var utilLayer = await Scene.CreateUntilityLayerRenderer();
-            var gizmo = await utilLayer.CreatePositionGizmo(); 
+            Gizmo = await utilLayer.CreatePositionGizmo();
 
-            //var box1 = await AddBox1(Scene);
-            //await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
-            //    new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(box1)));
+            var box1 = await AddBox1(Scene);
+            await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger,
+                new MeshMouseEventHandler(async () => await Gizmo.AttachMeshToGizmo(box1)));
 
             //var torus = await AddThorus(Scene);
             //await torus.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
@@ -91,10 +94,7 @@ namespace Babylon.UI.Shared.Helpers
                     break;
             } 
 
-            var newName=GenerateNameForMesh(typeMesh);
-
-            Console.WriteLine(newName);
-
+            var newName=GenerateNameForMesh(typeMesh);  
             var mesh = await creatorMesh.CreateMesh(newName);
 
             Meshes.Add(mesh);

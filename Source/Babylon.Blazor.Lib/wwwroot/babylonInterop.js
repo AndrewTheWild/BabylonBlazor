@@ -454,7 +454,7 @@ export function registerOnPickTriggerForMesh(scene, mesh, dotNetHelper) {
             mesh.actionManager = new BABYLON.ActionManager(scene);
         }
 
-        let action=mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
+        var action = mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
              dotNetHelper.invokeMethodAsync('OnActionTrigger');
         }));
 
