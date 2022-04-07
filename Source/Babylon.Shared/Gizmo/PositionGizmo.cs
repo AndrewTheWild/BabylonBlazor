@@ -15,7 +15,7 @@ namespace Babylon.Shared.Gizmo
 
         public async Task AttachMeshToGizmo(Mesh mesh)
         {
-            await _babylonInstance.InvokeAsync<IJSObjectReference>("attachMeshToGizmo", JsObjRef, mesh.JsObjRef);
+            await _babylonInstance.InvokeVoidAsync("attachMeshToGizmo", JsObjRef, mesh.JsObjRef);
         }
     }
 }
