@@ -7,6 +7,7 @@ namespace Babylon.UI.Shared.Helpers
     public class CustomDrawCanvasImp : BabylonCanvasBase
     {
         public CustomSceneCreator SceneCreator { get; private set; }
+
         /// <summary>
         /// Initializes the scene.
         /// </summary>

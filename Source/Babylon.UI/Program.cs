@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Babylon.Blazor;
+using Babylon.UI.Shared.Helpers.App;
 using Microsoft.JSInterop;
 
 namespace Babylon.UI
@@ -18,6 +19,8 @@ namespace Babylon.UI
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             builder.Services.AddTransient(sp => new InstanceCreator(sp.GetService<IJSRuntime>()));
+
+            builder.Services.AddSingleton<AppState>();
 
             await builder.Build().RunAsync();
         }

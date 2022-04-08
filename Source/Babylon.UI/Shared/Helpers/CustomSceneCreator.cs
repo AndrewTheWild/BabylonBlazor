@@ -4,13 +4,11 @@ using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Babylon.Blazor;
-using Babylon.Blazor.Babylon;
-using Babylon.Blazor.Babylon.Actions;
+using Babylon.Blazor.Babylon; 
 using Babylon.Blazor.Babylon.Parameters;
 using Babylon.Blazor.Models.ServiceContracts;
 using Babylon.Model.Constants;
-using Babylon.Shared.Algorithms;
-using Babylon.Shared.BabylonEventHandlers.MeshEventHandlers;
+using Babylon.Shared.Algorithms; 
 using Babylon.Shared.Extensions.Babylon.SceneExtensions;
 using Babylon.Shared.Gizmo;
 using Babylon.Shared.MeshCreator;
@@ -24,7 +22,7 @@ namespace Babylon.UI.Shared.Helpers
 
         public PositionGizmo Gizmo { get; private set; }
 
-        public List<Mesh> Meshes { get; }
+        public List<Mesh> Meshes { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneCreator"/> class.
@@ -58,9 +56,9 @@ namespace Babylon.UI.Shared.Helpers
             var utilLayer = await Scene.CreateUntilityLayerRenderer();
             Gizmo = await utilLayer.CreatePositionGizmo();
 
-            var box1 = await AddBox1(Scene);
-            await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger,
-                new MeshMouseEventHandler(async () => await Gizmo.AttachMeshToGizmo(box1)));
+            //var box1 = await AddBox1(Scene);
+            //await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger,
+            //    new MeshMouseEventHandler(async () => await Gizmo.AttachMeshToGizmo(box1)));
 
             //var torus = await AddThorus(Scene);
             //await torus.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
@@ -71,7 +69,7 @@ namespace Babylon.UI.Shared.Helpers
             await RunRender(canvas, camera, Engine, Scene);
         }
 
-        public async Task CreateMesh(TypeMesh.Mesh typeMesh)
+        public async Task<Mesh> CreateMesh(TypeMesh.Mesh typeMesh)
         {
             ICreatorMesh creatorMesh;
 
@@ -97,7 +95,7 @@ namespace Babylon.UI.Shared.Helpers
             var newName=GenerateNameForMesh(typeMesh);  
             var mesh = await creatorMesh.CreateMesh(newName);
 
-            Meshes.Add(mesh);
+            return mesh;
         }
 
         private string GenerateNameForMesh(TypeMesh.Mesh typeMesh)

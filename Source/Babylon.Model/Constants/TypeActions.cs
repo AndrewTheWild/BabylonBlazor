@@ -4,6 +4,7 @@
     {
         public enum Action
         {
+            None,
             Move
         }
     }

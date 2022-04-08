@@ -109,7 +109,7 @@ export function createFaceColors(r, g, b, a) {
     for (let i = 0; i < 6; i++) {
         colors[i] = new BABYLON.Color4(r, g, b, a);
     }
-    TraceProps("*colors for face*", colors, true);
+     
     return colors;
 }
 
