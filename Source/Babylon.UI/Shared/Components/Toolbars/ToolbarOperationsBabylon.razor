@@ -1,0 +1,17 @@
+﻿@using Babylon.Model.Constants
+ 
+
+<div role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group-vertical" role="group" aria-label="First group">
+        <button type="button" class="btn btn-primary" @onclick="(() => AssignAction(TypeActions.Action.Move))">
+            <img src="img/iconTools/icons8-move-32.png"/>
+        </button>
+        <button type="button" class="btn btn-primary" @onclick="(() => AssignAction(TypeActions.Action.Rotate))">
+            <img src="img/iconTools/icons8-3d-rotate-32.png"/>
+        </button>
+        <button type="button" class="btn btn-primary" @onclick="(() => AssignAction(TypeActions.Action.Scale))">
+            <img src="img/iconTools/icons8-scale-32.png"/>
+        </button> 
+    </div> 
+</div> 
+

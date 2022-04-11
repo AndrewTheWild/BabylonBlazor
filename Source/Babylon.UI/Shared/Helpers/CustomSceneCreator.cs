@@ -5,13 +5,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Babylon.Blazor;
 using Babylon.Blazor.Babylon;
-using Babylon.Blazor.Babylon.Actions;
 using Babylon.Blazor.Babylon.Parameters;
 using Babylon.Blazor.Models.ServiceContracts;
 using Babylon.Model.Constants;
 using Babylon.Shared.Algorithms;
-using Babylon.Shared.BabylonEventHandlers.MeshEventHandlers;
 using Babylon.Shared.Extensions.Babylon.SceneExtensions;
+using Babylon.Shared.Gizmo;
 using Babylon.Shared.MeshCreator;
 
 namespace Babylon.UI.Shared.Helpers
@@ -21,7 +20,9 @@ namespace Babylon.UI.Shared.Helpers
         public Engine Engine { get; private set; }
         public Scene Scene { get; private set; } 
 
-        public List<Mesh> Meshes { get; private set; }
+        public GizmoManager GizmoManager { get; private set; }
+
+        public List<Mesh> Meshes { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneCreator"/> class.
@@ -42,22 +43,21 @@ namespace Babylon.UI.Shared.Helpers
         public override async Task CreateAsync(BabylonCanvasBase canvas)
         {
             Engine = await BabylonInstance.CreateEngine(CanvasId, true);
-            Scene = await Engine.CreateScene();
-            //set rotation center
+            Scene = await Engine.CreateScene(); 
             var cameraTarget = await BabylonInstance.CreateVector3(0, 0, 0);
             //set camera
             // var camera = await scene.CreateArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 10, cameraTarget, CanvasId);
             double absolutMax = 10;
             var camera = await Scene.CreateArcRotateCamera("Camera", 3 * Math.PI / 2, 3 * Math.PI / 8, absolutMax * 3.6, cameraTarget, CanvasId);
             var hemisphericLightDirection = await BabylonInstance.CreateVector3(1, 1, 0);
-            var light1 = await Scene.CreateHemispehericLight("light1", hemisphericLightDirection, 0.98);
+            var light1 = await Scene.CreateHemispehericLight("light1", hemisphericLightDirection, 0.98); 
 
-            var utilLayer = await Scene.CreateUntilityLayerRenderer();
-            var gizmo = await utilLayer.CreatePositionGizmo(); 
+            GizmoManager = await Scene.CreateGizmoManager();
 
             //var box1 = await AddBox1(Scene);
-            //await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
-            //    new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(box1)));
+            //await GizmoManager.SetOperationForMesh(TypeActions.Action.Rotate);
+            //await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger,
+            //    new MeshMouseEventHandler(async () => await GizmoManager.AttachMesh(box1)));
 
             //var torus = await AddThorus(Scene);
             //await torus.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
@@ -68,7 +68,7 @@ namespace Babylon.UI.Shared.Helpers
             await RunRender(canvas, camera, Engine, Scene);
         }
 
-        public async Task CreateMesh(TypeMesh.Mesh typeMesh)
+        public async Task<Mesh> CreateMesh(TypeMesh.Mesh typeMesh)
         {
             ICreatorMesh creatorMesh;
 
@@ -91,13 +91,12 @@ namespace Babylon.UI.Shared.Helpers
                     break;
             } 
 
-            var newName=GenerateNameForMesh(typeMesh);
-
-            Console.WriteLine(newName);
-
+            var newName=GenerateNameForMesh(typeMesh);  
             var mesh = await creatorMesh.CreateMesh(newName);
 
-            Meshes.Add(mesh);
+            await GizmoManager.AttachMesh(mesh);
+
+            return mesh;
         }
 
         private string GenerateNameForMesh(TypeMesh.Mesh typeMesh)
@@ -105,13 +104,13 @@ namespace Babylon.UI.Shared.Helpers
             var baseName = TypeMesh.GetNameForMesh(typeMesh);
 
             var pattern = $"^{baseName}(\\d+)\\Z";
-            var regulaExp = new Regex(pattern);
+            var regularExp = new Regex(pattern);
 
             var existingNumber = new List<int>();
 
             foreach (var mesh in Meshes)
             {
-                if (regulaExp.IsMatch(mesh.Name))
+                if (regularExp.IsMatch(mesh.Name))
                 {
                     var numberPart = mesh.Name.Replace($"{baseName}", "");
                     if (int.TryParse(numberPart, out int number))
