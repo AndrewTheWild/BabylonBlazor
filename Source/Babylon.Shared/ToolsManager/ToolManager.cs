@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Babylon.Blazor.Babylon;
+﻿using System.Threading.Tasks;
 using Babylon.Blazor.Models.ServiceContracts;
 using Babylon.Model.Constants;
 using Babylon.Shared.Gizmo;
@@ -8,14 +6,12 @@ using Babylon.Shared.Gizmo;
 namespace Babylon.Shared.ToolsManager
 {
     public class ToolManager
-    {
-        private readonly List<Mesh> _meshes;
-        private readonly PositionGizmo _gizmo;
+    { 
+        private readonly GizmoManager _gizmoManager;
 
-        public ToolManager(PositionGizmo gizmo,List<Mesh> meshes)
-        {
-            _meshes = meshes;
-            _gizmo = gizmo;
+        public ToolManager(GizmoManager gizmoManager)
+        { 
+            _gizmoManager = gizmoManager;
         }
 
         public async Task AssignAction(TypeActions.Action action)
@@ -25,14 +21,20 @@ namespace Babylon.Shared.ToolsManager
             switch (action)
             {
                 case TypeActions.Action.Move:
-                    tool = new MoveTool(_gizmo);
+                    tool = new MoveTool(_gizmoManager);
+                    break;
+                case TypeActions.Action.Rotate:
+                    tool = new RotateTool(_gizmoManager);
+                    break;
+                case TypeActions.Action.Scale:
+                    tool = new ScaleTool(_gizmoManager);
                     break;
                 default:
-                    tool = new MoveTool(_gizmo);
+                    tool = new NoneTool(_gizmoManager);
                     break;
             }
 
-           await tool.Initialize(_meshes);
+           await tool.Initialize();
         }
     }
 }

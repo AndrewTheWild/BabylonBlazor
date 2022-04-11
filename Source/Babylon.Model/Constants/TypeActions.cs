@@ -4,8 +4,10 @@
     {
         public enum Action
         {
-            None,
-            Move
+            None=0,
+            Move=1,
+            Rotate=2,
+            Scale=3
         }
     }
 }
