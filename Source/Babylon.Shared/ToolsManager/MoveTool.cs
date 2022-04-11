@@ -19,9 +19,7 @@ namespace Babylon.Shared.ToolsManager
         }
 
         public async Task Initialize(List<Mesh> meshes)
-        {
-            Console.WriteLine($"{nameof(MoveTool.Initialize)} {nameof(meshes)}:{meshes.Count} ");
-
+        {  
             foreach (var mesh in meshes)
             {
                await mesh.RegisterAction(ActionManager.ActionType.OnPickTrigger,
