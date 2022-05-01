@@ -1,0 +1,13 @@
+﻿<h3>List Meshes</h3> 
+
+<ul>
+    @if (SceneCreator?.Meshes != null)
+    {
+        foreach (var mesh in SceneCreator.Meshes)
+        {
+            <li>
+                @mesh.Name
+            </li>
+        }   
+    }
+</ul>

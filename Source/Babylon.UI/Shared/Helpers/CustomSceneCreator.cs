@@ -18,7 +18,7 @@ namespace Babylon.UI.Shared.Helpers
     public class CustomSceneCreator : SceneCreator
     {
         public Engine Engine { get; private set; }
-        public Scene Scene { get; private set; } 
+        public Scene Scene { get; private set; }
 
         public GizmoManager GizmoManager { get; private set; }
 
@@ -33,7 +33,7 @@ namespace Babylon.UI.Shared.Helpers
             : base(babylonInstance, canvasId)
         {
             Meshes = new List<Mesh>();
-        } 
+        }
 
         /// <summary>
         /// Creates the asynchronous.
@@ -43,14 +43,14 @@ namespace Babylon.UI.Shared.Helpers
         public override async Task CreateAsync(BabylonCanvasBase canvas)
         {
             Engine = await BabylonInstance.CreateEngine(CanvasId, true);
-            Scene = await Engine.CreateScene(); 
+            Scene = await Engine.CreateScene();
             var cameraTarget = await BabylonInstance.CreateVector3(0, 0, 0);
             //set camera
             // var camera = await scene.CreateArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 10, cameraTarget, CanvasId);
             double absolutMax = 10;
             var camera = await Scene.CreateArcRotateCamera("Camera", 3 * Math.PI / 2, 3 * Math.PI / 8, absolutMax * 3.6, cameraTarget, CanvasId);
             var hemisphericLightDirection = await BabylonInstance.CreateVector3(1, 1, 0);
-            var light1 = await Scene.CreateHemispehericLight("light1", hemisphericLightDirection, 0.98); 
+            var light1 = await Scene.CreateHemispehericLight("light1", hemisphericLightDirection, 0.98);
 
             GizmoManager = await Scene.CreateGizmoManager();
 
@@ -89,9 +89,9 @@ namespace Babylon.UI.Shared.Helpers
                 default:
                     creatorMesh = new BoxCreator(BabylonInstance, Scene);
                     break;
-            } 
+            }
 
-            var newName=GenerateNameForMesh(typeMesh);  
+            var newName = GenerateNameForMesh(typeMesh);
             var mesh = await creatorMesh.CreateMesh(newName);
 
             await GizmoManager.AttachMesh(mesh);
@@ -120,10 +120,10 @@ namespace Babylon.UI.Shared.Helpers
                 }
             }
 
-            var newNumber=MissingNumberInSequence.GetMissingElements(existingNumber);
+            var newNumber = MissingNumberInSequence.GetMissingElements(existingNumber);
 
             return $"{baseName}{newNumber}";
-        } 
+        }
 
         private async Task<Mesh> AddBox1(Scene scene)
         {
@@ -132,10 +132,10 @@ namespace Babylon.UI.Shared.Helpers
             MeshParameters boxParameters = new MeshParameters(BabylonInstance) { Options = boxOptions };
             await boxParameters.SetPosition(0, 0, 0);
             return await scene.CreateBox("Box1", boxParameters);
-        } 
+        }
 
         private async Task RunRender(BabylonCanvasBase canvas, ArcRotateCamera camera, Engine engine, Scene scene)
-        { 
+        {
             await BabylonInstance.RunRenderLoop(engine, scene);
         }
     }
