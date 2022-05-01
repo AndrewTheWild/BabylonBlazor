@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Babylon.Blazor.Babylon;
 
 namespace Babylon.UI.Pages
 {
     public partial class BabylonUI
-    {
-        private async Task CreateBox()
-        {
-            await SceneCreator.AddBox("Box2");
-        }
+    { 
     }
 }

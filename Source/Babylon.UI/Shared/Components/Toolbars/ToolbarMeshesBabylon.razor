@@ -1,0 +1,42 @@
+﻿@using Babylon.Model.Constants
+
+<div class="">
+    <div class="row">
+        <div class="col-8">
+            <ul class="list-group">
+                @if (SceneCreator?.Meshes != null)
+                {
+                    foreach (var mesh in SceneCreator.Meshes)
+                    {
+                                <li class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">@mesh.Name</h5>
+                                        <small><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                            </small>
+                                    </div> 
+                                </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div class="col-4"> 
+                <div class="btn-group-vertical" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-primary" @onclick="(() => CreateMesh(TypeMesh.Mesh.Box))">
+                        <img src="img/icon3d/icons8-cube-32.png"/>
+                    </button>
+                    <button type="button" class="btn btn-primary" @onclick="(() => CreateMesh(TypeMesh.Mesh.Sphere))">
+                        <img src="img/icon3d/icons8-sphere-32.png"/>
+                    </button>
+                    <button type="button" class="btn btn-primary" @onclick="(() => CreateMesh(TypeMesh.Mesh.Cylinder))">
+                        <img src="img/icon3d/icons8-cylinder-32.png"/>
+                    </button>
+                    <button type="button" class="btn btn-primary" @onclick="(() => CreateMesh(TypeMesh.Mesh.Torus))">
+                        <img src="img/icon3d/icons8-torus-32.png"/>
+                    </button> 
+            </div> 
+        </div>
+    </div>
+</div>

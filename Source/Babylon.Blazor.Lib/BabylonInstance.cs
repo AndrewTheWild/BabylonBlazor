@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using System.Threading.Tasks;
-
+using System.Threading.Tasks; 
 using Babylon.Blazor.Babylon;
 using Babylon.Blazor.Babylon.Parameters;
-
+using Babylon.Blazor.Models.ServiceContracts;
 using Microsoft.JSInterop;
 
 namespace Babylon.Blazor
@@ -16,7 +15,7 @@ namespace Babylon.Blazor
     /// Implements the <see cref="System.IDisposable" />
     /// </summary>
     /// <seealso cref="System.IDisposable" />
-    public class BabylonInstance : IDisposable
+    public class BabylonInstance : IBabylonInstance,IDisposable
     {
         private readonly IJSInProcessObjectReference _babylonWrapper;
 

@@ -7,6 +7,7 @@ namespace Babylon.UI.Shared.Helpers
     public class CustomDrawCanvasImp : BabylonCanvasBase
     {
         public CustomSceneCreator SceneCreator { get; private set; }
+
         /// <summary>
         /// Initializes the scene.
         /// </summary>
@@ -18,11 +19,12 @@ namespace Babylon.UI.Shared.Helpers
             {
                 SceneCreator = new CustomSceneCreator(babylonInstance, canvasId);
                 await SceneCreator.CreateAsync(this);
+
+                StateHasChanged();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                Console.WriteLine(e); 
             }
         }
     }

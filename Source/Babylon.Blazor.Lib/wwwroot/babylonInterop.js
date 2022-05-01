@@ -109,7 +109,7 @@ export function createFaceColors(r, g, b, a) {
     for (let i = 0; i < 6; i++) {
         colors[i] = new BABYLON.Color4(r, g, b, a);
     }
-    TraceProps("*colors for face*", colors, true);
+     
     return colors;
 }
 
@@ -298,14 +298,7 @@ export function createGrid(sizeX, sizeY, step,color) {
     //Create linesystem
     const linesystem = BABYLON.MeshBuilder.CreateLineSystem("linesystem", { lines: myLines });
     //linesystem.color = new BABYLON.Color3(0, 1, 0);
-    linesystem.color = color;
-    //var myLines2 = [];
-    //myLines2.push([new BABYLON.Vector3(0, 1, 0), new BABYLON.Vector3(3, 4, 0)]);
-    //myLines2.push([new BABYLON.Vector3(0.5, 0.5, 0), new BABYLON.Vector3(3.5, 3.5, 0)]);
-    //myLines2.push([new BABYLON.Vector3(1, 0, 0), new BABYLON.Vector3(4, 3, 0)]);
-
-    //const linesystem2 = BABYLON.MeshBuilder.CreateLineSystem("linesystem2", { lines: myLines2 });
-    //linesystem2.color = new BABYLON.Color3(1, 0, 0);
+    linesystem.color = color; 
 }
 
 export function createTextPlane (scene, position, text, color, size) {
@@ -393,30 +386,9 @@ let ObjectMover = function (mousePosition, cube) {
 //-------------------------------------------------------------------------------------------------
 const isObject = (obj) => {
     return Object.prototype.toString.call(obj) === '[object Object]';
-};
-
-function TraceProps(name, obj, recursive) {
-    /// <summary>
-    /// Traces the props.
-    /// </summary>
-    /// <param name="name">The name.</param>
-    /// <param name="obj">The object.</param>
-    /// <param name="recursive">The recursive.</param>
-    console.log(name + " - type:" + typeof(obj));
-    for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            var item = obj[key];
-            if (recursive && isObject(item)) {
-                TraceProps("\t" + key,item);
-            } else {
-                console.log(key + " -> " + item);
-            }
-        }
-    }
-}
-
-
+}; 
 //--------------------------- 
+
 export function getMeshByName(scene,name) {
     return scene.getMeshByName(name);
 }
@@ -447,17 +419,72 @@ export function attachMeshToGizmo(gizmo, mesh) {
     }
 }
 
+//--------------------------- Gizmo manager
+
+export function createGizmoManager(scene, attachedMesh) {
+    let gizmoManager = new BABYLON.GizmoManager(scene);
+
+    gizmoManager.positionGizmoEnabled = false;
+    gizmoManager.rotationGizmoEnabled = false;
+    gizmoManager.scaleGizmoEnabled = false; 
+
+    if (attachedMesh) {
+        gizmoManager.attachToMesh(attachedMesh);
+    }
+
+    return gizmoManager;
+}
+
+export function attachMeshToGizmoManager(gizmoManager, attachedMesh) {
+    try {
+        if (attachedMesh) {
+            gizmoManager.attachToMesh(attachedMesh);
+        }
+    } catch (error) {
+        console.error(`attachMeshToGizmo : ${error}`);
+    } 
+}
+
+export function setOperationForGizmoManager(gizmoManager,operation) {
+    gizmoManager.positionGizmoEnabled = false;
+    gizmoManager.rotationGizmoEnabled = false;
+    gizmoManager.scaleGizmoEnabled = false;
+
+    switch (operation) {
+        case 1:
+            gizmoManager.positionGizmoEnabled = true;
+            break;
+        case 2:
+            gizmoManager.rotationGizmoEnabled = true;
+            break;
+        case 3:
+            gizmoManager.scaleGizmoEnabled = true;
+            break;
+    }
+}
+
+//---------------------------
+
 export function registerOnPickTriggerForMesh(scene, mesh, dotNetHelper) {
     try {
         if (!mesh.actionManager) {
             mesh.actionManager = new BABYLON.ActionManager(scene);
         }
 
-        mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
+        var action = mesh.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger, () => {
              dotNetHelper.invokeMethodAsync('OnActionTrigger');
         }));
+
+        return action;
     } catch (error) {
         console.error(`registerOnPickTriggerForMesh : ${error}`);
     }
-    
+}
+
+export function getMeshName(mesh) {
+    return mesh.name;
+}
+
+export function setMeshName(mesh, name) {
+    mesh.name = name;
 }
