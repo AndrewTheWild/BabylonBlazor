@@ -8,6 +8,7 @@ using Babylon.Blazor.Models.ServiceContracts;
 using Babylon.Model.Constants;
 using Babylon.Shared.Algorithms;
 using Babylon.Shared.Extensions.Babylon.SceneExtensions;
+using Babylon.Shared.Gizmo;
 using Babylon.Shared.MeshCreator;
 
 namespace Babylon.UI.Shared.Helpers
@@ -18,6 +19,7 @@ namespace Babylon.UI.Shared.Helpers
         public Scene Scene { get; private set; } 
 
         public List<Mesh> Meshes { get; private set; }
+        public GizmoManager GizmoManager { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneCreator"/> class.
@@ -108,11 +110,7 @@ namespace Babylon.UI.Shared.Helpers
             var newNumber = MissingNumberInSequence.GetMissingElements(existingNumber);
 
             return $"{baseName}{newNumber}";
-        } 
-            var diffuseColor = await BabylonInstance.CreateColor3(Color.Aqua); //Brown,DarkRed
-            var material = await scene.CreateMaterial("material1", diffuseColor, null, 1.0);
-        {
-
+        }  
         private async Task RunRender(BabylonCanvasBase canvas, ArcRotateCamera camera, Engine engine, Scene scene)
         {
             //await camera.SetAutoRotate(canvas.UseAutoRotate, canvas.IdleRotationSpeed);
