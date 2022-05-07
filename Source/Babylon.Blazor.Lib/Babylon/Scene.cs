@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks; 
-using Babylon.Blazor.Babylon.Parameters; 
+﻿using System.Threading.Tasks;
+
+using Babylon.Blazor.Babylon.Parameters;
+
 using Microsoft.JSInterop;
 
 namespace Babylon.Blazor.Babylon
