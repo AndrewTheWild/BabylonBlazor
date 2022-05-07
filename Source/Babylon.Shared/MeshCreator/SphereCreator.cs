@@ -23,9 +23,7 @@ namespace Babylon.Shared.MeshCreator
             var options = new SphereOptions { Diameter = 5.0 };
             var parameters = new MeshParameters(_babylonInstance) { Options = options };
             await parameters.SetPosition(5,10, 0);
-            //rotate for correct viewing of text texture
-            //await parameters.SetRotation(0, 0, Tools.GradToRadian(180));
-            var sphere = await Scene.CreateSphere("sphere1", parameters);
+            var sphere = await Scene.CreateSphere(name, parameters);
             var diffuseColor = await _babylonInstance.CreateColor3(Color.Aqua); 
             var material = await Scene.CreateMaterial("material1", diffuseColor, null, 1.0);
             sphere.SetMaterial(material);

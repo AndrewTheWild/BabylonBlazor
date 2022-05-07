@@ -52,9 +52,9 @@ namespace Babylon.Blazor.Babylon
             BabylonInstance.InvokeAsync<object>("setMaterial", JsObjRef, mat.JsObjRef);
         }
 
-        public async Task RegisterAction(ActionManager.ActionType actionType, MeshEventHandlerBase meshEvent)
-        {
-            await _actionManagerAction.AddEventHandler(this, actionType, meshEvent);
+        public async Task<ActionMesh> RegisterAction(ActionManager.ActionType actionType, MeshEventHandlerBase meshEvent)
+        {  
+           return await _actionManagerAction.AddEventHandler(this, actionType, meshEvent);
         }
     }
 }

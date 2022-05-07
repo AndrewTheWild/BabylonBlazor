@@ -23,7 +23,7 @@ namespace Babylon.Shared.MeshCreator
             var options = new TorusOptions() { Diameter = 4, Tessellation = 20 };
             var torusParameters = new MeshParameters(_babylonInstance) { Options = options };
 
-            var torus = await Scene.CreateTorus("Torus1", torusParameters);
+            var torus = await Scene.CreateTorus(name, torusParameters);
 
             var diffuseColor = await _babylonInstance.CreateColor3(Color.CadetBlue);
             var material = await Scene.CreateMaterial("material2", diffuseColor, null, 1.0);

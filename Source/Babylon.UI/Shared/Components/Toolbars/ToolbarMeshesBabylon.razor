@@ -1,0 +1,25 @@
+﻿@using Babylon.Model.Constants
+
+<div class="">
+    <div class="row">
+        <div class="col-8">
+            <ListMeshes SceneCreator="@SceneCreator"/>
+        </div>
+        <div class="col-4"> 
+                <div class="btn-group-vertical" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-primary" @onclick="(() => CreateMesh(TypeMesh.Mesh.Box))">
+                        <img src="img/icon3d/icons8-cube-32.png"/>
+                    </button>
+                    <button type="button" class="btn btn-primary" @onclick="(() => CreateMesh(TypeMesh.Mesh.Sphere))">
+                        <img src="img/icon3d/icons8-sphere-32.png"/>
+                    </button>
+                    <button type="button" class="btn btn-primary" @onclick="(() => CreateMesh(TypeMesh.Mesh.Cylinder))">
+                        <img src="img/icon3d/icons8-cylinder-32.png"/>
+                    </button>
+                    <button type="button" class="btn btn-primary" @onclick="(() => CreateMesh(TypeMesh.Mesh.Torus))">
+                        <img src="img/icon3d/icons8-torus-32.png"/>
+                    </button> 
+            </div> 
+        </div>
+    </div>
+</div>

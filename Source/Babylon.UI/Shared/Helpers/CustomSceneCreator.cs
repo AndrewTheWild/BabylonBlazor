@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+using System.Collections.Generic; 
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Babylon.Blazor;
-using Babylon.Blazor.Babylon;
-using Babylon.Blazor.Babylon.Actions;
-using Babylon.Blazor.Babylon.Parameters;
+using Babylon.Blazor.Babylon; 
 using Babylon.Blazor.Models.ServiceContracts;
 using Babylon.Model.Constants;
 using Babylon.Shared.Algorithms;
-using Babylon.Shared.BabylonEventHandlers.MeshEventHandlers;
 using Babylon.Shared.Extensions.Babylon.SceneExtensions;
 using Babylon.Shared.MeshCreator;
 
@@ -43,32 +39,21 @@ namespace Babylon.UI.Shared.Helpers
         {
             Engine = await BabylonInstance.CreateEngine(CanvasId, true);
             Scene = await Engine.CreateScene();
-            //set rotation center
-            var cameraTarget = await BabylonInstance.CreateVector3(0, 0, 0);
-            //set camera
-            // var camera = await scene.CreateArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 10, cameraTarget, CanvasId);
+
+            var cameraTarget = await BabylonInstance.CreateVector3(0, 0, 0); 
             double absolutMax = 10;
             var camera = await Scene.CreateArcRotateCamera("Camera", 3 * Math.PI / 2, 3 * Math.PI / 8, absolutMax * 3.6, cameraTarget, CanvasId);
             var hemisphericLightDirection = await BabylonInstance.CreateVector3(1, 1, 0);
             var light1 = await Scene.CreateHemispehericLight("light1", hemisphericLightDirection, 0.98);
 
-            var utilLayer = await Scene.CreateUntilityLayerRenderer();
-            var gizmo = await utilLayer.CreatePositionGizmo(); 
+            await Scene.CreateGround();
 
-            //var box1 = await AddBox1(Scene);
-            //await box1.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
-            //    new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(box1)));
-
-            //var torus = await AddThorus(Scene);
-            //await torus.RegisterAction(ActionManager.ActionType.OnPickTrigger, 
-            //    new MeshMouseEventHandler(async () => await gizmo.AttachMeshToGizmo(torus)));
-
-            //Meshes.AddRange(new []{torus});
+            GizmoManager = await Scene.CreateGizmoManager(); 
 
             await RunRender(canvas, camera, Engine, Scene);
         }
 
-        public async Task CreateMesh(TypeMesh.Mesh typeMesh)
+        public async Task<Mesh> CreateMesh(TypeMesh.Mesh typeMesh)
         {
             ICreatorMesh creatorMesh;
 
@@ -89,15 +74,14 @@ namespace Babylon.UI.Shared.Helpers
                 default:
                     creatorMesh = new BoxCreator(BabylonInstance, Scene);
                     break;
-            } 
+            }
 
-            var newName=GenerateNameForMesh(typeMesh);
-
-            Console.WriteLine(newName);
-
+            var newName = GenerateNameForMesh(typeMesh);
             var mesh = await creatorMesh.CreateMesh(newName);
 
-            Meshes.Add(mesh);
+            await GizmoManager.AttachMesh(mesh);
+
+            return mesh;
         }
 
         private string GenerateNameForMesh(TypeMesh.Mesh typeMesh)
@@ -105,13 +89,13 @@ namespace Babylon.UI.Shared.Helpers
             var baseName = TypeMesh.GetNameForMesh(typeMesh);
 
             var pattern = $"^{baseName}(\\d+)\\Z";
-            var regulaExp = new Regex(pattern);
+            var regularExp = new Regex(pattern);
 
             var existingNumber = new List<int>();
 
             foreach (var mesh in Meshes)
             {
-                if (regulaExp.IsMatch(mesh.Name))
+                if (regularExp.IsMatch(mesh.Name))
                 {
                     var numberPart = mesh.Name.Replace($"{baseName}", "");
                     if (int.TryParse(numberPart, out int number))
@@ -121,22 +105,17 @@ namespace Babylon.UI.Shared.Helpers
                 }
             }
 
-            var newNumber=MissingNumberInSequence.GetMissingElements(existingNumber);
+            var newNumber = MissingNumberInSequence.GetMissingElements(existingNumber);
 
             return $"{baseName}{newNumber}";
         } 
-
-        private async Task<Mesh> AddBox1(Scene scene)
+            var diffuseColor = await BabylonInstance.CreateColor3(Color.Aqua); //Brown,DarkRed
+            var material = await scene.CreateMaterial("material1", diffuseColor, null, 1.0);
         {
-            BoxOptions.FaceColorsObj boxColors = await BabylonInstance.CreateFaceColors(Color.Chocolate);
-            Options boxOptions = new BoxOptions { Size = 2, FaceColors = boxColors };
-            MeshParameters boxParameters = new MeshParameters(BabylonInstance) { Options = boxOptions };
-            await boxParameters.SetPosition(0, 0, 0);
-            return await scene.CreateBox("Box1", boxParameters);
-        } 
 
         private async Task RunRender(BabylonCanvasBase canvas, ArcRotateCamera camera, Engine engine, Scene scene)
-        { 
+        {
+            //await camera.SetAutoRotate(canvas.UseAutoRotate, canvas.IdleRotationSpeed);
             await BabylonInstance.RunRenderLoop(engine, scene);
         }
     }
