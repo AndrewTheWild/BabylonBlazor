@@ -7,8 +7,10 @@ namespace Babylon.Shared.Algorithms
     {
         public static int GetMissingElements(List<int> numbers)
         {
+            numbers.Sort((item1, item2) => item1.CompareTo(item2));
+
             var result = new List<int>();
-            var cnt = 0;
+            var cnt = 0; 
 
             if (!numbers.Any())
             {
@@ -25,9 +27,7 @@ namespace Babylon.Shared.Algorithms
                 {
                     result.Add(i);
                 }
-            }
-
-            result.Sort((item1, item2) => item1.CompareTo(item2));
+            } 
 
             return result.FirstOrDefault()==0 ? numbers.Max()+1 : result.FirstOrDefault();
         }

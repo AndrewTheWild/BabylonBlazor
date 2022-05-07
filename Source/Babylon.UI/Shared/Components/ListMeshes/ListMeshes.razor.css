@@ -1,0 +1,8 @@
+﻿.list-mesh {
+    height: 400px;
+    overflow-y: auto;
+}
+
+.delete-item:hover {
+    cursor: pointer;
+}
