@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Drawing;
+using System.Threading.Tasks;
 using Babylon.Blazor.Babylon;
 using Babylon.Blazor.Babylon.Parameters;
 using Babylon.Blazor.Models.ServiceContracts;
@@ -27,7 +28,13 @@ namespace Babylon.Shared.MeshCreator
 
             await cylinderParameters.SetPosition(-tuple.X / 2, tuple.Y / 2, 0);
 
-            return await Scene.CreateCylinder(name, cylinderParameters);
+            var cylinder= await Scene.CreateCylinder(name, cylinderParameters);
+
+            var diffuseColor = await _babylonInstance.CreateColor3(Color.Green);
+            var material = await Scene.CreateMaterial("material2", diffuseColor, null, 1.0);
+            cylinder.SetMaterial(material);
+
+            return cylinder;
         }
     }
 }

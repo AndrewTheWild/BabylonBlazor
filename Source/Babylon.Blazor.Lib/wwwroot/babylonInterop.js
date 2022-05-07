@@ -88,6 +88,7 @@ export function createEngine(canvasId, antialias) {
 }
 
 export function createScene(engine) { 
+
     return new BABYLON.Scene(engine);
 }
 
@@ -487,4 +488,12 @@ export function getMeshName(mesh) {
 
 export function setMeshName(mesh, name) {
     mesh.name = name;
+}
+
+export function removeMeshFromScene(scene, mesh) {
+    scene.removeMesh(mesh);
+}
+
+export function createGround() {
+    const ground = BABYLON.MeshBuilder.CreateGround("ground", { height: 50, width: 50, subdivisions: 4 });
 }

@@ -264,6 +264,16 @@ namespace Babylon.Blazor.Babylon
         public async Task ShowWorldAxis(double size)
         {
             await BabylonInstance.InvokeVoidAsync("showWorldAxis", size, JsObjRef);
-        } 
+        }
+
+        public async Task RemoveMesh(Mesh mesh)
+        {
+            await BabylonInstance.InvokeVoidAsync("removeMeshFromScene", JsObjRef, mesh.JsObjRef);
+        }
+
+        public async Task CreateGround()
+        {
+            await BabylonInstance.InvokeVoidAsync("createGround");
+        }
     }
 }
