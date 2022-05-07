@@ -8,8 +8,6 @@ using Babylon.Blazor.Models.ServiceContracts;
 using Babylon.Model.Constants;
 using Babylon.Shared.Algorithms;
 using Babylon.Shared.Extensions.Babylon.SceneExtensions;
-using Babylon.Shared.Gizmo;
-using Babylon.Shared.MeshCreator;
 
 namespace Babylon.UI.Shared.Helpers
 {
@@ -18,9 +16,6 @@ namespace Babylon.UI.Shared.Helpers
         public Engine Engine { get; private set; }
         public Scene Scene { get; private set; }
 
-        public GizmoManager GizmoManager { get; private set; }
-
-        public List<Mesh> Meshes { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneCreator"/> class.
@@ -30,7 +25,6 @@ namespace Babylon.UI.Shared.Helpers
         public CustomSceneCreator(BabylonInstance babylonInstance, string canvasId)
             : base(babylonInstance, canvasId)
         {
-            Meshes = new List<Mesh>();
         }
 
         /// <summary>

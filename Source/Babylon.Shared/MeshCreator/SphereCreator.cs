@@ -22,7 +22,7 @@ namespace Babylon.Shared.MeshCreator
         {
             var options = new SphereOptions { Diameter = 5.0 };
             var parameters = new MeshParameters(_babylonInstance) { Options = options };
-            await parameters.SetPosition(5,10, 0); 
+            await parameters.SetPosition(5,10, 0);
             var sphere = await Scene.CreateSphere(name, parameters);
             var diffuseColor = await _babylonInstance.CreateColor3(Color.Aqua); 
             var material = await Scene.CreateMaterial("material1", diffuseColor, null, 1.0);

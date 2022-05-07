@@ -22,7 +22,7 @@ namespace Babylon.UI.Shared.Components.Toolbars
         {
             if(firstRender)
                 return;
-              
+
             _toolManager = new ToolManager(SceneCreator.GizmoManager);
 
             AppState.OnChange += _toolManager.AssignAction;
